@@ -42,12 +42,27 @@ the thread's perspective: this gives you the power to write unit tests without "
 and it allows you to dump the cache on errors to try and debug your threads. These ideas were stolen
 from the Haxl library.
 
-If I wanted to continue the textile metaphor I suppose the I/O libraries would count as the *weft*
-and the thread types would count as the *warp*. I am not sure whether I will use those however.
+I am not yet decided on whether the thread actually accepts params. It strikes me that we have two
+independent means by which information gets into a thread: either by these input params, or by 
+waiting on a channel, possibly its own mailbox. Potentially this should be unified. However I am not
+sure how to guarantee resumability in that context.
+
+# I/O and killability
+The routing/caching middleware which (ideally) handles all of the I/O in a thread is called the 
+*weft* and it serves an additional purpose: Node.js does not give a great way to kill the ongoing
+processes in a running application, though [there are methods][github-event-loop-issue] to get at
+this information. When a thread is “killed” we actually just disconnect it from the weft with any
+attempt to contact the weft met by an exception. 
+
+
+
+
 
 [hswiki-cloud-haskell]: https://wiki.haskell.org/Cloud_Haskell "HaskellWiki: Cloud Haskell"
 [hackage-haxl]: https://hackage.haskell.org/package/haxl "Hackage: Haxl"
 [node-child_process]: https://nodejs.org/api/child_process.html "Node.js docs: child_process"
 [npm-npool]: https://www.npmjs.com/package/npool "NPM package: npool"
-[mdn-async-fn]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/async_function "MDN: async function"
-
+[mdn-async-fn]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/async_function 
+    "MDN: async function"
+[github-event-loop-issue]: https://github.com/nodejs/node/issues/1128 
+    "Github @nodejs/node: feature request: a way to inspect what's in the event loop"
