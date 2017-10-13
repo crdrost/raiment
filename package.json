@@ -1,6 +1,6 @@
 {
   "name": "raiment",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "Raiment is a concurrent cluster and cached-I/O library for Node.js, attempting to merge Cloud Haskell and Haxl.",
   "main": "index.js",
   "scripts": {
@@ -12,5 +12,7 @@
   },
   "author": "CR Drost <C.R.Drost@gmail.com>",
   "license": "MPL-2.0",
-  "devDependencies": {}
+  "devDependencies": {},
+  "dependencies": {
+  }
 }
